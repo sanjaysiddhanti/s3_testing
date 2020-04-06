@@ -4,7 +4,6 @@ import json
 
 import boto3
 
-s3 = boto3.client("s3")
 S3_BUCKET = "recipes"
 
 
@@ -33,7 +32,7 @@ class Recipe:
         
         Returns a Recipe object
         """
-        response = s3.get_object(Bucket=S3_BUCKET, Key=name)
+        response = boto3.client("s3").get_object(Bucket=S3_BUCKET, Key=name)
         response = json.loads(response["Body"].read())
         return cls(response["name"], response["instructions"])
 
@@ -56,7 +55,7 @@ class Recipe:
         Args:
             name (str): Name of the recipe to delete
         """
-        s3.delete_object(Bucket=S3_BUCKET, Key=name)
+        boto3.client("s3").delete_object(Bucket=S3_BUCKET, Key=name)
 
     def to_json(self):
         """Serialized the recipe to json
@@ -70,6 +69,6 @@ class Recipe:
         """Persists a recipe to S3
         """
         serialized_recipe = BytesIO(json.dumps(self.to_json()).encode("utf-8"))
-        s3.put_object(
+        boto3.client("s3").put_object(
             Bucket=S3_BUCKET, Key=self.name, Body=serialized_recipe.getvalue()
         )
