@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  tests:
+    image: s3_testing:latest
+    networks:
+      - app
+    entrypoint:
+      - /app/wait-for-it.sh
+      - -t
+      - "30"
+      - localstack:4572
+      - --
+      - pytest
+      - test/
+    environment:
+      - AWS_ACCESS_KEY_ID=fake
+      - AWS_DEFAULT_REGION=fake
+      - AWS_SECRET_ACCESS_KEY=fake
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566-4599:4566-4599"
+    networks:
+      - app
+    environment:
+      - SERVICES=s3
+networks:
+  app:
+    driver: bridge

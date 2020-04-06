@@ -7,7 +7,6 @@ from unittest.mock import patch
 import boto3
 from botocore.stub import Stubber, ANY
 from botocore.response import StreamingBody
-from moto import mock_s3
 import pytest
 
 from recipe import Recipe, S3_BUCKET
@@ -28,7 +27,8 @@ def s3_stub():
 
 def test_create_and_get(s3_stub):
     # Stub out the put_object response
-    # Note: These stubs are incomplete - I omitted things such as HTTP headers for brevity
+    # Note: These stubs are incomplete - I omitted things such as
+    # HTTP headers for brevity
     put_object_response = {
         "ResponseMetadata": {
             "RequestId": "5994D680BF127CE3",
