@@ -17,17 +17,6 @@ class Recipe:
     instructions: str
 
     @classmethod
-    def new(cls, name: str, instructions: str):
-        """Creates a new recipe, saving the data to S3
-        
-        Args:
-            name (str): Recipe name
-            instructions (str): Recipe instructions
-        """
-        recipe = cls(name, instructions)
-        return recipe
-
-    @classmethod
     def get_by_name(cls, name: str):
         """Looks up a Recipe by name
         

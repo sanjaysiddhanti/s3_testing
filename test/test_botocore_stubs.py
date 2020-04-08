@@ -65,7 +65,7 @@ def test_create_and_get(s3_stub):
 
     # Activate the stubber
     with s3_stub:
-        recipe = Recipe.new(name="nachos", instructions="Melt cheese on chips")
+        recipe = Recipe(name="nachos", instructions="Melt cheese on chips")
         recipe.save()
 
         recipe = Recipe.get_by_name("nachos")

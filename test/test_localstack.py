@@ -15,7 +15,7 @@ def s3_localstack():
 
 
 def test_create_and_get(s3_localstack):
-    Recipe.new(name="nachos", instructions="Melt cheese on chips").save()
+    Recipe(name="nachos", instructions="Melt cheese on chips").save()
 
     recipe = Recipe.get_by_name("nachos")
     assert recipe.name == "nachos"
@@ -31,7 +31,7 @@ def test_update(s3_localstack):
     old_instructions = "Melt cheese on chips"
     new_instructions = "Microwave a plate full of tortilla chips and cheese"
 
-    Recipe.new(name="nachos", instructions=old_instructions).save()
+    Recipe(name="nachos", instructions=old_instructions).save()
 
     new_recipe = Recipe.update_instructions(
         name="nachos", new_instructions=new_instructions
@@ -49,7 +49,7 @@ def test_update(s3_localstack):
 
 
 def test_delete(s3_localstack):
-    Recipe.new(name="nachos", instructions="Melt cheese on chips").save()
+    Recipe(name="nachos", instructions="Melt cheese on chips").save()
 
     response = s3_localstack.list_objects_v2(Bucket=S3_BUCKET)
     assert len(response["Contents"]) == 1

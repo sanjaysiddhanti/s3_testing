@@ -20,7 +20,7 @@ def s3():
 
 
 def test_create_and_get(s3):
-    Recipe.new(name="nachos", instructions="Melt cheese on chips").save()
+    Recipe(name="nachos", instructions="Melt cheese on chips").save()
 
     recipe = Recipe.get_by_name("nachos")
     assert recipe.name == "nachos"
@@ -36,7 +36,7 @@ def test_update(s3):
     old_instructions = "Melt cheese on chips"
     new_instructions = "Microwave a plate full of tortilla chips and cheese"
 
-    Recipe.new(name="nachos", instructions=old_instructions).save()
+    Recipe(name="nachos", instructions=old_instructions).save()
 
     new_recipe = Recipe.update_instructions(
         name="nachos", new_instructions=new_instructions
@@ -54,7 +54,7 @@ def test_update(s3):
 
 
 def test_delete(s3):
-    Recipe.new(name="nachos", instructions="Melt cheese on chips").save()
+    Recipe(name="nachos", instructions="Melt cheese on chips").save()
 
     response = s3.list_objects_v2(Bucket=S3_BUCKET)
     assert len(response["Contents"]) == 1
