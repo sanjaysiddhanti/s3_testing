@@ -51,7 +51,7 @@ class Recipe:
         get_s3().delete_object(Bucket=S3_BUCKET, Key=name)
 
     def to_json(self):
-        """Serialized the recipe to json
+        """Serialize the recipe to json
         
         Returns:
             dict: JSON representation of the Recipe

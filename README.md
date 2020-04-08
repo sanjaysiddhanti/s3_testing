@@ -8,16 +8,18 @@ This repository provides examples of testing S3 interactions in Python using the
 
 ## Usage
 
-Faster, will not work for localstack
+Build the Docker image
 
 ```
 docker build -t s3_testing .
-docker run s3_testing:latest pytest test/
 ```
 
-Slower, will work for all tests
+Run the tests
 
 ```
-docker build -t s3_testing .
 docker-compose up
 ```
+
+## Contributing
+
+If you have examples of other S3 testing libraries, please send me a pull request.
