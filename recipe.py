@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from io import BytesIO
 import json
 
 import boto3
@@ -54,14 +53,12 @@ class Recipe:
         """Serialize the recipe to json
         
         Returns:
-            dict: JSON representation of the Recipe
+            str: JSON representation of the Recipe
         """
-        return {"name": self.name, "instructions": self.instructions}
+        return json.dumps({"name": self.name, "instructions": self.instructions})
 
     def save(self):
         """Persists a recipe to S3
         """
-        serialized_recipe = BytesIO(json.dumps(self.to_json()).encode("utf-8"))
-        get_s3().put_object(
-            Bucket=S3_BUCKET, Key=self.name, Body=serialized_recipe.getvalue()
-        )
+        serialized_recipe = self.to_json().encode("utf-8")
+        get_s3().put_object(Bucket=S3_BUCKET, Key=self.name, Body=serialized_recipe)
